@@ -1,0 +1,43 @@
+#Saved Model
+#File path of model checkpoint if running existing model
+checkpoint_path: False #./saved_weights/checkpoint_MouseBrainSection_l1_hippocampus_10.pth'
+#Boolean for whether training model
+train_bool: True
+
+#Default Tuned Parameters
+
+#Tuned Model Parameters
+#Generator Learning Rate
+gen_lr: 0.003
+#Descriminator Learning Rate
+disc_lr: 0.003
+#Discriminator Embedding Dimension
+embed_dim: 256
+#Generator Embedding Dimension
+gen_embed_dim: 256
+
+#Fixed Parameters
+#Number of epochs to train the model for
+num_epochs: 5
+#Size of each mini-batch
+batch_size: 32
+#Lower bound of number of cell types per spot
+celltypes_lb: 2
+#Upper bound of number of cell types per spot
+celltypes_ub: 5
+#Number of test samples for evaluation TSNE plot
+test_size: 100
+#Experiment Number
+exp_num: 5
+
+#Datasets
+#File name of spatial transcriptomics dataset
+spatial_sample: 'adata_spatial_cor.loom'
+#File name of singlecell transcriptomics dataset
+singlecell_file: 'adata_singlecell_cor.loom'
+#File path for aligned dataset directory
+data_dir: './data/MouseBrainSection_l1_hippocampus/'
+# File path for results directory
+results_dir: './Results/'
+#File path for saved model directory
+saved_weights_dir: './saved_weights/'

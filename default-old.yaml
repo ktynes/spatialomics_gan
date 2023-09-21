@@ -1,0 +1,44 @@
+#Saved Model
+checkpoint_path:
+  desc: File path of model checkpoint if running existing mdoel
+  value: False #./saved_weights/checkpoint_MouseBrainSection_l1_hippocampus_10.pth'
+train_bool:
+  desc: Boolean for whether training model
+  value: True
+
+#Fixed Parameters
+num_epochs:
+  desc: Number of epochs to train over
+  value: 1
+batch_size:
+  desc: Size of each mini-batch
+  value: 32
+celltypes_lb:
+  desc: Lower bound of number of cell types per spot
+  value: 2
+celltypes_ub:
+  desc: Upper bound of number of cell types per spot
+  value: 5
+test_size:
+  desc: Number of test samples for evaluation TSNE plot
+  value: 100
+exp_num:
+  descr: Experiment Number
+  value: 3
+  
+#Datasets
+spatial_sample:
+  desc: Name of spatial transcriptomics dataset
+  value: 'MouseBrainSection'
+singlecell_file:
+  desc: File name of singlecell transcriptomics dataset
+  value: 'l1_hippocampus.loom'
+data_dir:
+  desc: File path for aligned dataset directory
+  value: '../../Datasets.nosync/Aligned Data/'
+results_dir:
+  desc: File path for results directory
+  value: './Results/'
+saved_weights_dir:
+  desc: File path for saved model directory
+  value: './saved_weights/'
