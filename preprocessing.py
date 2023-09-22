@@ -24,14 +24,15 @@ class RandomCellProportions(Dataset):
         self.num_celltypes = num_celltypes
 
         # Randomly select number of cell types used
-        self.num_celltypes_used = np.random.randint(self.lb_celltypes,self.ub_celltypes)
+        self.num_celltypes_used = np.random.randint(self.lb_celltypes, self.ub_celltypes)
         self.celltypes_idx = np.random.choice(self.num_celltypes, self.num_celltypes_used, replace=False)
 
         # Generate random cell type proportions
-        proportions = list(np.random.dirichlet(np.ones(self.num_celltypes_used), 1)[0])
-        all_proportions = [proportions.pop() if i in self.celltypes_idx else 0 for i in np.arange(self.num_celltypes)] 
+        proportions = np.random.dirichlet(np.ones(self.num_celltypes_used), 1)[0]
+        all_proportions = np.array([proportions[i] if i in self.celltypes_idx else 0 for i in np.arange(self.num_celltypes)])
 
-        self.dataset = all_proportions
+        # Use float32 for better memory usage
+        self.dataset = torch.tensor(all_proportions, dtype=torch.float32)
 
     def __getitem__(self, index):
         return self.dataset[index]
@@ -56,27 +57,28 @@ class SingleCellDataset(Dataset):
 
         # Extract unique cell type labels and their counts
         celltype_labels = adata_singlecell.obs['Class']
-        cell_types, celltype_counts = np.unique(celltype_labels, return_counts = True)
+        cell_types, celltype_counts = np.unique(celltype_labels, return_counts=True)
         cum_sum = np.insert(np.cumsum(celltype_counts), 0, 0)
 
         # Store data attributes
         self.num_cells = celltype_labels.size
         self.num_celltypes = cell_types.size
         self.cell_types = cell_types
-        self.dataset = torch.tensor(adata_singlecell.X.todense())
-        self.num_genes = len(self.dataset[0])
 
+        # Keep the data as sparse tensor for memory efficiency
+        self.dataset = torch.sparse.FloatTensor(torch.tensor(adata_singlecell.X.nonzero()), torch.tensor(adata_singlecell.X.data), adata_singlecell.X.shape)
+        
         # Create a mask for cell types
         mask = np.zeros((self.num_celltypes, self.num_cells))
         for i in range(self.num_celltypes):
             mask[i, cum_sum[i]:cum_sum[i + 1]] = 1
-        self.mask = torch.tensor(mask, requires_grad=False)
+        self.mask = torch.tensor(mask, requires_grad=False, dtype=torch.float32)
 
     def __getitem__(self, index):
         return self.dataset[index]
 
     def __len__(self):
-        return np.shape(self.adata_singlecell.X)[0]
+        return self.adata_singlecell.X.shape[0]
 
 class SpatialDataset(Dataset):
     def __init__(self, data_dir):
@@ -89,12 +91,14 @@ class SpatialDataset(Dataset):
         self.data_dir = data_dir
         adata_spatial = sc.read(data_dir)
         
-        # Extract and store spatial samples and locations
-        self.spatial_samples = torch.tensor(adata_spatial.X.todense())
-        self.spatial_locations = list(zip(adata_spatial.obs['array_row'], adata_spatial.obs['array_col']))
+        # Keep the data as sparse tensor for memory efficiency
+        self.spatial_samples = torch.sparse.FloatTensor(torch.tensor(adata_spatial.X.nonzero()), torch.tensor(adata_spatial.X.data), adata_spatial.X.shape)
+
+        # Use a numpy array for efficient data handling
+        self.spatial_locations = np.column_stack((adata_spatial.obs['array_row'], adata_spatial.obs['array_col']))
 
     def __getitem__(self, index):
         return self.spatial_samples[index]
 
     def __len__(self):
-        return len(self.spatial_samples)
+        return self.spatial_samples.shape[0]

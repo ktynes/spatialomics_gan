@@ -21,7 +21,7 @@ def evaluate(generator, spatial_dataloader, singlecell_data, config, joined_name
 
         spatial_dataset = spatial_dataloader.dataset
         spatial_size = len(spatial_dataset)
-        real_spatial = spatial_dataset
+        real_spatial = spatial_dataset.spatial_samples
 
         num_celltypes = len(singlecell_data.cell_types)
         random_proportions = generate_random_proportions(spatial_size, celltypes_lb, celltypes_ub, num_celltypes)
