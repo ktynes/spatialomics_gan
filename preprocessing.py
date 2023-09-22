@@ -70,6 +70,8 @@ class SingleCellDataset(Dataset):
         values = torch.tensor(adata_singlecell.X.data)
         shape = adata_singlecell.X.shape
         self.dataset = torch.sparse.FloatTensor(indices, values, shape)
+        print(self.dataset.shape)
+        self.num_genes = len(self.dataset[0])
 
         #self.dataset = torch.sparse.FloatTensor(torch.tensor(adata_singlecell.X.nonzero()), torch.tensor(adata_singlecell.X.data), adata_singlecell.X.shape)
         
