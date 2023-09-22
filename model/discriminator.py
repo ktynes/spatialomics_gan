@@ -16,9 +16,10 @@ class Discriminator(nn.Module):
 
         self.activation = nn.ReLU()
 
-    def forward(self, input):
+    def forward(self, input_data):
+        input_data = input_data.to(device)
         outs = None
-        outs = self.fc1(input)
+        outs = self.fc1(input_data)
         outs = self.activation(outs)
         outs = self.fc2(outs)
         return torch.sigmoid(outs)

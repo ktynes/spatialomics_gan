@@ -16,6 +16,10 @@ class Generator(nn.Module):
 
     #Implement forward pass of generator module
     def forward(self, random_proportions, singlecell_data):
+        random_proportions = random_proportions.to(device)
+        singlecell_data = singlecell_data.to(device)
+        self.mask = self.mask.to(device)
+        
         #print(singlecell_data.shape)
         #masked linear layer
         #print('mask shape', self.mask.shape)

@@ -21,6 +21,10 @@ class Generator2(nn.Module):
 
     #Implement forward pass of generator module
     def forward(self, random_proportions, singlecell_data):
+        random_proportions = random_proportions.to(device)
+        singlecell_data = singlecell_data.to(device)
+        self.mask = self.mask.to(device)
+        
         #masked linear layer
         self.linear_signatures.weight.data = self.linear_signatures.weight * self.mask #Check over this line for optimization error
         #print('singlecell_data: ', singlecell_data.type)
