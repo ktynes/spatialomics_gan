@@ -70,7 +70,6 @@ class SingleCellDataset(Dataset):
         values = torch.tensor(adata_singlecell.X.data)
         shape = adata_singlecell.X.shape
         self.dataset = torch.sparse.FloatTensor(indices, values, shape)
-        print(self.dataset.shape)
         self.num_genes = len(self.dataset[0])
 
         #self.dataset = torch.sparse.FloatTensor(torch.tensor(adata_singlecell.X.nonzero()), torch.tensor(adata_singlecell.X.data), adata_singlecell.X.shape)
@@ -98,9 +97,12 @@ class SpatialDataset(Dataset):
         self.data_dir = data_dir
         adata_spatial = sc.read(data_dir)
         
-        # Keep the data as sparse tensor for memory efficiency
-        self.spatial_samples = torch.sparse.FloatTensor(torch.tensor(adata_spatial.X.nonzero()), torch.tensor(adata_spatial.X.data), adata_spatial.X.shape)
-
+        # Convert sparse matrix indices to an int64 tensor
+        indices = torch.tensor(adata_spatial.X.nonzero()).long()
+        values = torch.tensor(adata_spatial.X.data)
+        shape = adata_spatial.X.shape
+        self.spatial_samples = torch.sparse.FloatTensor(indices, values, shape)
+        
         # Use a numpy array for efficient data handling
         self.spatial_locations = np.column_stack((adata_spatial.obs['array_row'], adata_spatial.obs['array_col']))
 
