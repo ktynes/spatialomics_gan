@@ -36,7 +36,7 @@ spatial_sample: 'adata_spatial_cor.loom'
 #File name of singlecell transcriptomics dataset
 singlecell_file: 'adata_singlecell_cor.loom'
 #File path for aligned dataset directory
-data_dir: './data/MouseBrainSection_l1_hippocampus/'
+data_dir: './data/MouseBrainSection_l1_hippocampus/Aligned Data'
 # File path for results directory
 results_dir: './Results/'
 #File path for saved model directory
