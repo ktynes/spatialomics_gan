@@ -66,7 +66,12 @@ class SingleCellDataset(Dataset):
         self.cell_types = cell_types
 
         # Keep the data as sparse tensor for memory efficiency
-        self.dataset = torch.sparse.FloatTensor(torch.tensor(adata_singlecell.X.nonzero()), torch.tensor(adata_singlecell.X.data), adata_singlecell.X.shape)
+        indices = torch.tensor(adata_singlecell.X.nonzero()).long()  # Convert to int64 tensor using .long()
+        values = torch.tensor(adata_singlecell.X.data)
+        shape = adata_singlecell.X.shape
+        self.dataset = torch.sparse.FloatTensor(indices, values, shape)
+
+        #self.dataset = torch.sparse.FloatTensor(torch.tensor(adata_singlecell.X.nonzero()), torch.tensor(adata_singlecell.X.data), adata_singlecell.X.shape)
         
         # Create a mask for cell types
         mask = np.zeros((self.num_celltypes, self.num_cells))
