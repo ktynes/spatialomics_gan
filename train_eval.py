@@ -99,13 +99,13 @@ def train(generator, discriminator, dataloader, singlecell_data, config, data_na
             # Generate random cell type proportions
             batch_size = len(batch)
             num_celltypes = len(singlecell_data.cell_types)
-            random_proportions = generate_random_proportions(batch_size, celltypes_lb, celltypes_ub, num_celltypes)
+            random_proportions = generate_random_proportions(batch_size, celltypes_lb, celltypes_ub, num_celltypes).to(device)
 
             # Generate pseudo and real spatial data
             pseudo_spatial = generator(random_proportions, singlecell_data.dataset).to(device)
-            pseudo_labels = torch.zeros((batch_size, 1))
+            pseudo_labels = torch.zeros((batch_size, 1)).to(device)
             real_spatial = batch.to(device)
-            real_labels = torch.ones((batch_size, 1))
+            real_labels = torch.ones((batch_size, 1)).to(device)
 
             # Train the generator
             pseudo_discriminator_out = discriminator(pseudo_spatial)
