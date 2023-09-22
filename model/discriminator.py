@@ -1,6 +1,7 @@
 from util import *
 import torch
 import torch.nn as nn
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 class Discriminator(nn.Module):
     """ The disciminator module of the stGAN model will classify whether an input spatial transcriptomics 

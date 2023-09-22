@@ -1,6 +1,7 @@
 from util import *
 import torch
 import torch.nn as nn
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 class Generator2(nn.Module):
 
@@ -24,7 +25,7 @@ class Generator2(nn.Module):
         random_proportions = random_proportions.to(device)
         singlecell_data = singlecell_data.to(device)
         self.mask = self.mask.to(device)
-        
+
         #masked linear layer
         self.linear_signatures.weight.data = self.linear_signatures.weight * self.mask #Check over this line for optimization error
         #print('singlecell_data: ', singlecell_data.type)
