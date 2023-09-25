@@ -1,7 +1,7 @@
-# `spatialomics_gan`: A Comprehensive Approach to Spatial Transcriptomics Data
+# `spatialomics_gan`: A Computational Approach to Spatial Transcriptomics Data
 
 ## Project Description
-The `spatialomics_gan` project endeavors to harness the intricate nature of spatial transcriptomics (ST) data through computational mechanisms. Using the robust capabilities of Generative Adversarial Networks (GANs) combined with intricately designed linear layers, the primary objective is to effectively represent and interpret gene expression patterns within a spatial perspective. This initiative bridges crucial understanding gaps in spatial transcriptomics.
+The `spatialomics_gan` project endeavors to harness the intricate nature of spatial transcriptomics (ST) data through computational mechanisms. The primary objective is to effectively represent and interpret gene expression patterns within a spatial perspective using the robust capabilities of Generative Adversarial Networks (GANs) combined with intricately designed linear layers. This initiative bridges crucial understanding gaps in spatial transcriptomics.
 
 ## Repository Structure
 This repository has been organized for intuitive navigation and understanding:
