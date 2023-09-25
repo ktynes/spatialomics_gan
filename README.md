@@ -14,7 +14,7 @@ This repository has been organized for intuitive navigation and understanding:
 
 ## Model Architecture: Spatial-Omics GAN
 
-![Spatial-Omics GAN Framework]("images/spatialomics_gan_framework.png")
+![Spatial-Omics GAN Framework]("spatialomics_gan_framework.png")
 Spatial-Omics Generative Adversarial Network Framework: This illustration showcases the GAN's pseudo-spot generation process. Drawing from single-cell data, the network undertakes a randomized cell type assignment to craft synthetic spatial-omics spots. These generated spots are then juxtaposed against authentic spots, facilitating a discriminator-guided classification. The visualization underscores the network's capability to mimic true spatial patterns through its generative processes.
 
 ### Overview
